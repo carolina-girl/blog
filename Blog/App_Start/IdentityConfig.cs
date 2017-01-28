@@ -11,15 +11,36 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Blog.Models;
+using SendGrid;
+using System.Configuration;
+using System.Net.Mail;
 
 namespace Blog
 {
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        public async Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            var apiKey = ConfigurationManager.AppSettings["api"];
+            var from = ConfigurationManager.AppSettings["email"];
+            SendGridMessage myMessage = new SendGridMessage();
+            myMessage.AddTo(from);
+            myMessage.From = new MailAddress(from);
+            myMessage.Subject = message.Subject;
+            myMessage.Html = message.Body;
+
+            var transportWeb = new Web(apiKey);
+
+            try
+            {
+                await transportWeb.DeliverAsync(myMessage);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                await Task.FromResult(0);
+            }
         }
     }
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace Blog.Models
 {
@@ -41,8 +42,9 @@ namespace Blog.Models
         {
             return new ApplicationDbContext();
         }
-        public DbSet<BlogPost> Posts { get; set; }
+        public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public IEnumerable ApplicationUsers { get; internal set; }
     }
 }
     

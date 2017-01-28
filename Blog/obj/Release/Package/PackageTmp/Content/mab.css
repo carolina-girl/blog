@@ -1,0 +1,113 @@
+﻿
+.intro-header {
+   max-width: 100% !important;
+}
+img {
+    max-width: 100% !important;
+}
+/*table {
+color:#333;
+font-family:Helvetica,Arial,sans-serif;
+width:100%;
+border-spacing:1px;
+border-collapse:separate;
+padding:0 3px;
+}
+
+td, th {
+height:30px;
+transition:all .3s;
+text-align:center;
+width:auto;
+}
+
+th {
+background:#B1B6AF;
+font-weight:700;
+border-radius: 5px;
+}
+
+td {
+background:#FAFAFA;
+}
+
+tr:nth-child(even) td {
+background:#F1F1F1;
+}
+
+tr:nth-child(odd) td {
+background:#E1DDDD;
+}
+
+tr td:hover {
+background:#666;
+color:#FFF
+}
+
+.form-group {
+color:#333;
+font-family:Helvetica,Arial,sans-serif;
+width:100%;
+border-spacing:1px;
+border-collapse:separate;
+padding:0 3px;
+}
+
+dd, dt {
+height:30px;
+transition:all .3s;
+text-align:center;
+width:auto;
+}
+
+.dl-horizontal {
+color:#333;
+font-family:Helvetica,Arial,sans-serif;
+width:100%;
+border-spacing:1px;
+border-collapse:separate;
+padding:0 3px;
+}
+
+dt {
+background:#B1B6AF;
+font-weight:700;
+border-radius: 5px;
+}
+
+dd {
+background:#FAFAFA;
+}*/
+img {
+    max-height: 300px;
+    margin-left: 300px;
+    margin-right: 300px;
+    margin-bottom: 3px;
+    margin-top: 3px;
+    border: solid 3px;
+}
+textarea#styled {
+	width: 600px;
+	height: 120px;
+	border: 3px solid #cccccc;
+	padding: 5px;
+	font-family: Tahoma, sans-serif;
+	background-image: url(bg.gif);
+	background-position: bottom right;
+	background-repeat: no-repeat;
+}
+.form-group-editor {
+    max-width: 1500px;
+    max-height: 300px;
+    margin-left: 290px;
+}
+.searchBox {
+    float: right;
+    margin-right: 0;
+    margin-top: 0;
+}
+.nav navbar-nav navbar-right {
+    float: right;
+    margin-right: 0;
+    margin-top: 0;
+}

@@ -1,0 +1,82 @@
+﻿@model Blog.Models.BlogPost
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="intro-header" style="background-image: url('/images/shutterstock_327287249.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Post</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta"><a href="#"></a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <dl class="dl-horizontal">
+                <dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Body)
+                </dd>
+            </dl>
+        </div>
+       </div>
+    </div>
+ <div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            @using (Html.BeginForm("Create", "Comments", FormMethod.Post, new { enctype = "Multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="PostId" value="@Model.Id" />
+                <textarea name="Body" id="styled" onfocus="this.value = ''; setbg('#8B0000');" onblur="setbg('white')">Enter your comment here...</textarea>
+                <input type="submit" value="Post Comment" class="btn btn-default action-link" />
+                <p>
+                    @Html.ActionLink("Edit", "Edit", new { slug = @Model.Slug }, null) |
+                    @Html.ActionLink("Delete", "Delete", new { id = @Model.Id }, null)
+                </p>
+            }
+        </div>
+
+      </div>
+  </div>
+    <div class="container">
+         <div class="row">
+             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                 
+                 @foreach (var comment in Model.Comments)
+            {
+                     <ul>
+                         <li>
+                             Posted by @comment.Author.Email at @comment.Created
+                         </li>
+                         <li>
+                             @comment.Body
+                         </li>
+                         <li>
+                             @Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id }, null) |
+                             @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, null)
+                         </li>
+                     </ul>
+                     <p>
+                         @Html.ActionLink("Back to Posts", "Index", new { id = comment.Id }, null)
+                     </p>
+                 }
+             </div>
+         </div>
+   </div>
+
+
+

@@ -1,6 +1,6 @@
 ﻿@model IPagedList<Blog.Models.BlogPost>
 
-@helper Truncate(string input, int length)
+@*@helper Truncate(string input, int length)
     {
     if (input.Length <= length)
     {
@@ -10,7 +10,7 @@
     {
             @input.Substring(0, length)<text>...</text>
     }
-    }
+    }*@
 
 @using PagedList;
 @using PagedList.Mvc;
@@ -36,25 +36,8 @@
 <!-- Main Content -->
 <div class="container">
     <div class="row">
-        @*<div class="form-group">
-             @if (ViewContext.HttpContext.User.IsInRole("Admin"))
-             {
-             <div class="col-md-offset-2 col-md-10">
-                @using (Html.BeginForm("Create", "BlogPosts", FormMethod.Post, new { enctype = "Multipart/form-data" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <input type="submit" value="Create" class="btn btn-default" />
-                }
-            </div>
-             }*@
-        @*</div>
-            </div>*@
         @foreach (var post in Model)
-        {
-            @*if (item.MediaURL != null)
-                {
-                    <img class="postImage" src="@item.MediaURL" alt="" />
-                }*@
+          {
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-preview">
                     <div class="blog-content">
@@ -63,7 +46,7 @@
                         @*<a href="post.html">
                             <h3 class="">@Html.DisplayFor(modelItem => @item.Title)</h3>*@
                         @*<h3><a href="@Url.Action("Details", new { Id=post.Title})">@Html.DisplayFor(modelItem => @post.Title)</a></h3>*@
-                        @Truncate(post.Body, 85)
+                        @*@Truncate(post.Body, 85)*@
                         <h5>@Html.ActionLink("Read more here...", "Details", new { slug = @post.Slug })</h5>
                         <p class="post-meta">Posted by <a href="#">Mary Ann Burns on @post.Created.ToLocalTime().ToString("MMMM dd, yyyy")</a>
                     </div>
@@ -89,7 +72,7 @@
 
 
 
-@section scripts{
+@*@section scripts{
     <script src="~/Scripts/tinymce/tinymce.min.js"></script>
     <script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
     <script type="text/javascript">
@@ -99,7 +82,7 @@
             });
         });
     </script>
-}
+}*@
 
 
 

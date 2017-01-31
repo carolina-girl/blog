@@ -23,11 +23,15 @@
     <hr />
     <dl class="dl-horizontal">
         @Html.HiddenFor(model => model.PostId)
-        <dt>
+        @Html.HiddenFor(model => model.Author)
+        @Html.HiddenFor(model => model.Created)
+        @Html.HiddenFor(model => model.Updated)
+        @Html.HiddenFor(model => model.UpdateReason)
+        @*<dt>
                 @Html.DisplayNameFor(model => model.Author.FirstName)
             </dt>
 
-            @*<dd>
+            <dd>
                 @Html.DisplayFor(model => model.Author.FirstName)
             </dd>*@
 
@@ -80,7 +84,7 @@
    
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> 
-            @Html.ActionLink("Back to List", "", "BlogPosts")
+            @Html.ActionLink("Back to List", "Details")
         </div>
     }
 

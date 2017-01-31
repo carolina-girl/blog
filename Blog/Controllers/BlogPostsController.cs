@@ -19,6 +19,7 @@ namespace Blog.Controllers
     public class BlogPostsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private string submitButton;
 
 
         // GET: BlogPosts
@@ -89,6 +90,15 @@ namespace Blog.Controllers
 
             if (ModelState.IsValid)
             {
+                switch (submitButton)
+                {
+                    case "Post":
+                        blogPost.Published = true;
+                        break;
+                    case "Save Draft":
+                        blogPost.Published = false;
+                        break;
+                }
                 var Slug = StringUtilities.URLFriendly(blogPost.Title);
                 if (String.IsNullOrWhiteSpace(Slug))
                 {

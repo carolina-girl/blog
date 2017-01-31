@@ -4,29 +4,32 @@
     ViewBag.Title = "Details";
 }
 
-<!-- Page Header -->
-<!-- Set your background image for this header on the line below. -->
-<header class="intro-header" style="background-image: url('/images/shutterstock_327287249.jpg')">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <h1>Post</h1>
-                    <h2 class="subheading"></h2>
-                    <span class="meta"><a href="#"></a></span>
+
+    <header class="intro-header" style="background-image: url('@Model.MediaURL')" alt="<h1>@Model.Title</h1>">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</header>
-<div class="container">
+    </header>
+
+@*<div class="container">
     <div class="row">
         <div class="col-lg-12">
             <dl class="dl-horizontal">
                 <dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Title)
+                </dt>
+                <dd><h2>
+                <strong>
+                @Html.DisplayFor(model => model.Title)
+                </strong>
+                </h2>
                 </dd>
+                <dt>
+                </dt>
                 <dd>
                     @Html.DisplayFor(model => model.Body)
                 </dd>
@@ -43,13 +46,11 @@
                 <input type="hidden" name="PostId" value="@Model.Id" />
                 <textarea name="Body" id="styled" onfocus="this.value = ''; setbg('#8B0000');" onblur="setbg('white')">Enter your comment here...</textarea>
                 <input type="submit" value="Post Comment" class="btn btn-default action-link" />
-                <p>
-                    @Html.ActionLink("Edit", "Edit", new { slug = @Model.Slug }, null) |
-                    @Html.ActionLink("Delete", "Delete", new { id = @Model.Id }, null)
-                </p>
-            }
-        </div>
 
+                    @Html.ActionLink("Edit", "Edit", new { id = @Model.Id }, null) 
+                    @Html.ActionLink("Delete", "Delete", new { id = @Model.Id }, null)
+             }
+        </div>
       </div>
   </div>
     <div class="container">
@@ -57,7 +58,7 @@
              <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                  
                  @foreach (var comment in Model.Comments)
-            {
+                   {
                      <ul>
                          <li>
                              Posted by @comment.Author.Email at @comment.Created
@@ -70,13 +71,179 @@
                              @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, null)
                          </li>
                      </ul>
-                     <p>
-                         @Html.ActionLink("Back to Posts", "Index", new { id = comment.Id }, null)
-                     </p>
-                 }
+                    }
              </div>
          </div>
    </div>
+<p>
+    @Html.ActionLink("Back to Posts", "Index")
+</p>*@
 
 
 
+<div class="banner-bg" id="top">
+
+    @if (Model.MediaURL == null)
+    {
+        <div class="banner-overlay jumbotron"></div>
+    }
+    else
+    {
+        <div class="banner-overlay" style="background-image: url('@Model.MediaURL')"></div>
+    }
+
+    <div class="welcome-text">
+        <h2>@Model.Title</h2>
+    </div>
+</div>
+
+<div class="page-section">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="widget-title"></h4>
+            <div class="content-section">
+                <!-- Blog Post Content Column -->
+                <div class="col-lg-12 blog-content">
+
+                    <!-- Post Content -->
+                    @Html.Raw(Model.Body)
+
+                    <hr>
+                    <!-- Date/Time -->
+                    <p>
+                        <span class="glyphicon glyphicon-time"></span>
+                        @if (Model.Published == true)
+                        {
+                            <span>Posted </span>
+                        }
+                        else
+                        {
+                            <span>Draft Saved </span>
+                        }
+                        on @Model.Created.ToLocalTime().ToString("MMMM dd, yyyy")
+                    </p>
+
+                    <!-- Blog Comments -->
+                    <!-- Comments Form -->
+                    <div class="well">
+                        <h4>Leave a Comment:</h4>
+                        @if (Request.IsAuthenticated)
+                        {
+                            using (Html.BeginForm("CreateComment", "Posts"))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-horizontal">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <input type="hidden" name="PostId" value="@Model.Id" />
+
+                                    <div class="form-group">
+                                        <div class="col-md-10">
+                                            <textarea class="form-control" id="editor" name="Content"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-10">
+                                            <input type="submit" value="Post Comment" class="btn btn-default action-link" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-danger">You must be logged in to comment.</p>
+                        }
+
+                        <hr>
+
+                        <div class="media">
+                            @{ var p = @Model.Comments; }
+                            @foreach (var comment in p)
+                            {
+                                <div class="media-body">
+                                    <h4 class="media-heading">
+                                        <a href="mailto:@comment.Author.Email">
+                                            @if (comment.Author.DisplayName != null)
+                                        {
+                                            @comment.Author.DisplayName
+                                        }
+                                        else
+                                        {
+                                            @comment.Author.Email
+                                        }
+                                    </a>
+                                    <br />
+                                    <small>@comment.Created.ToLocalTime().ToString("MMMM dd, yyyy")</small>
+                                    <br />
+                                    @if (@comment.Updated != null)
+                                    {
+                                        <small class="text-danger">
+                                            Modified @(comment.Updated.HasValue ? @comment.Updated.Value.ToString("MMMM dd, yyyy") : "Unchanged")M
+                                        </small>
+                                    }
+                                </h4>
+                                <div class="comment-content">
+                                    @comment.Body
+                                </div>
+
+                                @if (ViewContext.HttpContext.User.IsInRole("Admin") || ViewContext.HttpContext.User.IsInRole("Moderator"))
+                                {
+                                    <div class="comment-content-edit">
+                                        @using (Html.BeginForm("EditComment", "Posts", FormMethod.Post, new { onsubmit = "return confirm('Are you sure you want to modify this comment?')" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="EditCommentId" value="@comment.Id" />
+                                                                <input type="hidden" name="EditPostId" value="@comment.PostId" />
+                                                                <input type="hidden" name="EditDate" value="@comment.Created" />
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-10">
+                                                                        <textarea class="form-control" id="editor" name="EditContent">@comment.Body</textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="col-md-6">
+                                                                        <input type="submit" value="Submit Change" class="btn btn-default comment-btn" />
+                                                                    </div>
+                                                                </div>
+                                                               }
+                                                           </div>
+
+                                                            <div class="form-group comment-btn-edit">
+                                                                <button class="btn btn-default comment-btn" type="button">Edit</button>
+                                                            </div>
+
+                                                            <div class="form-group comment-btn-cancel col-md-pull-4 col-md-2">
+                                                                <button class="btn btn-default comment-btn" type="button">Cancel</button>
+                                                            </div>
+
+                                                            <div>
+
+                                                                @using (Html.BeginForm("DeleteComment", "Posts", FormMethod.Post, new { onsubmit = "return confirm('Are you sure you want to delete this comment?')" }))
+                                                                {
+                                                                    @Html.AntiForgeryToken()
+                                                                    <input type="hidden" name="CommentId" value="@comment.Id" />
+                                                                    <input type="hidden" name="PostId" value="@comment.PostId" />
+                                                                    <div class="form-group comment-btn-delete">
+                                                                        <input type="submit" value="Delete" class="btn btn-default action-link comment-btn" />
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                          }
+                                                  </div>
+                                               }
+                                       </div>
+                             </div>
+                    <p>
+                        @Html.ActionLink("Back to List", "Index")
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>

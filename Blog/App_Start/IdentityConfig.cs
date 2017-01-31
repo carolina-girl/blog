@@ -22,16 +22,18 @@ namespace Blog
         public async Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
-            var apiKey = ConfigurationManager.AppSettings["api"];
-            var from = ConfigurationManager.AppSettings["email"];
+            var apiKey = ConfigurationManager.AppSettings["SendGridAPIKey"];
+            var from = ConfigurationManager.AppSettings["ContactEmail"];
+
             SendGridMessage myMessage = new SendGridMessage();
-            myMessage.AddTo(from);
-            myMessage.From = new MailAddress(from);
+            myMessage.AddTo(message.Destination);
+            myMessage.From = new MailAddress("maburns@carolina.rr.com");
             myMessage.Subject = message.Subject;
             myMessage.Html = message.Body;
 
+            // Create a Web transport, using API Key
             var transportWeb = new Web(apiKey);
-
+            // Send the email.
             try
             {
                 await transportWeb.DeliverAsync(myMessage);

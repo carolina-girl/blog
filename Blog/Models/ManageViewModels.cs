@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System;
 
 namespace Blog.Models
 {
@@ -14,7 +15,28 @@ namespace Blog.Models
         public bool BrowserRemembered { get; set; }
     }
 
-    public class ManageLoginsViewModel
+    public class Contact
+    {
+        public int Id { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        public string Message { get; set; }
+
+        public string Phone { get; set; }
+
+        [Required]
+        public DateTime MessageSent { get; set; }
+    }
+
+
+public class ManageLoginsViewModel
     {
         public IList<UserLoginInfo> CurrentLogins { get; set; }
         public IList<AuthenticationDescription> OtherLogins { get; set; }

@@ -90,19 +90,10 @@ namespace Blog.Controllers
 
             if (ModelState.IsValid)
             {
-                switch (submitButton)
-                {
-                    case "Post":
-                        blogPost.Published = true;
-                        break;
-                    case "Save Draft":
-                        blogPost.Published = false;
-                        break;
-                }
                 var Slug = StringUtilities.URLFriendly(blogPost.Title);
                 if (String.IsNullOrWhiteSpace(Slug))
                 {
-                    ModelState.AddModelError("Title", "Invalid title");
+                    ModelState.AddModelError("Title", " ");
                     return View(blogPost);
                 }
                 if (db.BlogPosts.Any(p => p.Slug == Slug))
@@ -163,20 +154,20 @@ namespace Blog.Controllers
                     ModelState.AddModelError("Title", "Invalid title.");
                     return View(blogPost);
                 }
-                if (db.BlogPosts.Any(p => p.Slug == Slug))
-                {
-                    ModelState.AddModelError("Title", "The title must be unique.");
-                    return View(blogPost);
-                }
-            
-                    blogPost.Slug = Slug;
-                    db.Entry(blogPost).State = EntityState.Modified;
-                    blogPost.Updated = DateTimeOffset.Now;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                return View(blogPost);
+                //if (db.BlogPosts.Any(p => p.Slug == Slug))
+                //{
+                //    ModelState.AddModelError("Title", "The title must be unique.");
+                //    return View(blogPost);
+                //}
+
+                blogPost.Slug = Slug;
+                db.Entry(blogPost).State = EntityState.Modified;
+                blogPost.Created = DateTimeOffset.Now;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
+            return View(blogPost);
+        }
 
 
         [Authorize(Roles = "Admin, Moderator")]

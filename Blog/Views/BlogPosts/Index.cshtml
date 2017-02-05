@@ -56,17 +56,17 @@
 
             <div class="post-preview">
                   @foreach (var post in Model)
-                      {
+                  {
                         <h2><a href="@Url.Action("Details", new { slug = post.Slug })">@post.Title</a></h2>
-                        @*<a href="post.html" />*@
-                        @*<h3 class=@Html.DisplayFor(modelItem => item.Title)</h3>*@
-                            @*<h3><a href="@Url.Action("Details", new { Id=post.Title})">@Html.DisplayFor(modelItem => @post.Title)</a></h3>*@
-                           <h4><a href="@Url.Action("Details", new { slug = post.Slug })">@Truncate(post.Body, 85)</a></h4>
+                        <h4><a href="@Url.Action("Details", new { slug = post.Slug })">@Truncate(post.Body, 85)</a></h4>
                             <h5>@Html.ActionLink("Read more here...", "Details", new { slug = @post.Slug })</h5>
-                            <div class="post-meta">Posted by <a href="#">Mary Ann Burns on @post.Created.ToLocalTime().ToString("MMMM dd, yyyy")</a></div> 
-                       }
-                        </div>
-
+                            <div class="post-meta">Posted by <a href="#">Mary Ann Burns on @post.Created.ToLocalTime().ToString("MMMM dd, yyyy")</a></div>
+                            if (ViewContext.HttpContext.User.IsInRole("Admin"))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = post.Id }) 
+                                @Html.ActionLink("Delete", "Delete", new { id = post.Id });
+                            }
+                  }
                 <div class="form-group">
                     @if (ViewContext.HttpContext.User.IsInRole("Admin"))
                       {
@@ -74,13 +74,16 @@
                             @using (Html.BeginForm("Create", "BlogPosts", FormMethod.Post, new { enctype = "Multipart/form-data" }))
                             {
                                 @Html.AntiForgeryToken()
+                                <div>
                                 <input type="submit" value="Create" class="btn btn-default" />
+                                    </div>
                             }
                         </div>
                     }
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 

@@ -56,7 +56,6 @@
         <div class="form-group">
             <div class="col-md-offset-1 col-md-10">
                 <input type="submit" name="submitButton" value="Post" class="btn btn-default action-link" />
-                <input type="submit" name="submitButton" value="Save Draft" class="btn btn-default action-link" />
             </div>
         </div>
     </div>
@@ -64,7 +63,7 @@
 
 <div class="col-md-offset-1 col-md-10">
     <p>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Back to List", "Index") 
     </p>
 </div>
 
@@ -74,7 +73,7 @@
     <script type="text/javascript">
                 $(function () {
                     tinymce.init({
-                        selector: '#editor'
+                        forced_root_block : "",selector:'#editor'
                     });
                 });
     </script>

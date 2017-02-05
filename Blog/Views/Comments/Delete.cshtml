@@ -22,18 +22,13 @@
     <h4>Comment</h4>
     <hr />
     <dl class="dl-horizontal">
-        @Html.HiddenFor(model => model.PostId)
-        @Html.HiddenFor(model => model.Author)
-        @Html.HiddenFor(model => model.Created)
-        @Html.HiddenFor(model => model.Updated)
-        @Html.HiddenFor(model => model.UpdateReason)
-        @*<dt>
-                @Html.DisplayNameFor(model => model.Author.FirstName)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Author.FirstName)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Author.FirstName)
-            </dd>*@
+        <dd>
+            @Html.DisplayFor(model => model.Author.FirstName)
+        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.Post.Title)
@@ -51,40 +46,39 @@
             @Html.DisplayFor(model => model.Body)
         </dd>
 
-        @*<dt>
-                @Html.DisplayNameFor(model => model.Created)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Created)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Created)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Created)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Updated)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Updated)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Updated)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Updated)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.UpdateReason)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdateReason)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.UpdateReason)
-            </dd>*@
+        <dd>
+            @Html.DisplayFor(model => model.UpdateReason)
+        </dd>
 
     </dl>
-</div>
-
-    @using (Html.BeginForm("Delete", "Comments", FormMethod.Post, new { enctype = "Multipart/form-data" }))
-    { 
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
-   
+
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> 
-            @Html.ActionLink("Back to List", "Details")
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
         </div>
     }
+</div>
 

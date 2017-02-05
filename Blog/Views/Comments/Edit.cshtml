@@ -27,6 +27,7 @@
            @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.PostId)
+        @Html.HiddenFor(model => model.AuthorId)
 
         @*<div class="form-group">
             @Html.LabelFor(model => model.PostId, "PostId", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -68,8 +69,9 @@
     <script type="text/javascript">
                 $(function () {
                     tinymce.init({
-                        selector: '#editor'
+                        forced_root_block : "",selector:'#editor'
                     });
                 });
     </script>
 }
+    

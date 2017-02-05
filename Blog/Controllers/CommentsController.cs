@@ -77,6 +77,7 @@ namespace Blog.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.PostId = new SelectList(db.BlogPosts, "Id", "Title", comment.PostId);
             return View(comment);
         }
 
@@ -88,14 +89,14 @@ namespace Blog.Controllers
         public ActionResult Edit([Bind(Include = "Id,PostId,Body")] Comment comment)
         {
             if (ModelState.IsValid)
-            {
+            { 
                 db.Comments.Attach(comment);
-                //db.Entry.comment.State = EntityState.Modified;
-                db.Entry(comment).Property("Body").IsModified = true;
+                db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", "BlogPosts", new { Slug = slug });
+                var Slug = db.BlogPosts.Find(comment.PostId).Slug;
+                return RedirectToAction("Details", "BlogPosts", new { slug = Slug });
             }
-
+            ViewBag.PostId = new SelectList(db.BlogPosts, "Id", "Title", comment.PostId);
             return View(comment);
         }
 
@@ -114,22 +115,21 @@ namespace Blog.Controllers
             return View(comment);
         }
 
-        // POST: Comments/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Comments/Delete/
+        [Authorize(Roles = "Admin, Moderator")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int? id)
+        public ActionResult Delete(int id, int PostId)
         {
             Comment comment = db.Comments.Find(id);
             db.Comments.Remove(comment);
             db.SaveChanges();
 
-            return RedirectToAction("Details", "BlogPosts");
+            var Slug = db.BlogPosts.Find(comment.PostId).Slug;
+            return RedirectToAction("Details", "BlogPosts", new { slug = Slug });
         }
-        
- 
 
-
-protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing)
             {

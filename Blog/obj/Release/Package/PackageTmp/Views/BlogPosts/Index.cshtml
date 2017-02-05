@@ -18,6 +18,13 @@
 @{
     ViewBag.Title = "Index";
 }
+
+<style>
+    .searchBox {
+        float: right;
+        margin-right: 2px;
+    }
+</style>
 <!-- Page Header -->
 <!-- Set your background image for this header on the line below. -->
 <header class="intro-header" style="background-image: url('/images/shutterstock_327287249.jpg')">
@@ -37,19 +44,29 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <li class="nav navbar-nav navbar-right">
+                <div class="searchBox">
+                    @using (Html.BeginForm("Index", "BlogPosts"))
+                    {
+                        <input type="text" name="searchStr" />
+                                    <input type="submit" class="search" value="Search" />
+                    }
+                </div>
+            </li>
+
             <div class="post-preview">
                   @foreach (var post in Model)
-                      {
+                  {
                         <h2><a href="@Url.Action("Details", new { slug = post.Slug })">@post.Title</a></h2>
-                        @*<a href="post.html" />*@
-                        @*<h3 class=@Html.DisplayFor(modelItem => item.Title)</h3>*@
-                            @*<h3><a href="@Url.Action("Details", new { Id=post.Title})">@Html.DisplayFor(modelItem => @post.Title)</a></h3>*@
-                           <h4><a href="@Url.Action("Details", new { slug = post.Slug })">@Truncate(post.Body, 85)</a></h4>
+                        <h4><a href="@Url.Action("Details", new { slug = post.Slug })">@Truncate(post.Body, 85)</a></h4>
                             <h5>@Html.ActionLink("Read more here...", "Details", new { slug = @post.Slug })</h5>
-                            <div class="post-meta">Posted by <a href="#">Mary Ann Burns on @post.Created.ToLocalTime().ToString("MMMM dd, yyyy")</a></div> 
-                       }
-                        </div>
-
+                            <div class="post-meta">Posted by <a href="#">Mary Ann Burns on @post.Created.ToLocalTime().ToString("MMMM dd, yyyy")</a></div>
+                            if (ViewContext.HttpContext.User.IsInRole("Admin"))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = post.Id }) 
+                                @Html.ActionLink("Delete", "Delete", new { id = post.Id });
+                            }
+                  }
                 <div class="form-group">
                     @if (ViewContext.HttpContext.User.IsInRole("Admin"))
                       {
@@ -57,13 +74,16 @@
                             @using (Html.BeginForm("Create", "BlogPosts", FormMethod.Post, new { enctype = "Multipart/form-data" }))
                             {
                                 @Html.AntiForgeryToken()
+                                <div>
                                 <input type="submit" value="Create" class="btn btn-default" />
+                                    </div>
                             }
                         </div>
                     }
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 

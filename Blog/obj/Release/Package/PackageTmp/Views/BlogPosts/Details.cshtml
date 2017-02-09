@@ -3,7 +3,12 @@
 @{
     ViewBag.Title = "Details";
 }
-
+<style>
+    body {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+</style>
 
 <header class="intro-header" style="background-image: url('@Model.MediaURL')" alt="<h1>@Model.Title</h1>">
     <div class="container">
@@ -41,7 +46,9 @@
                         }
                         on @Model.Created.ToLocalTime().ToString("MMMM dd, yyyy")
                     </p>
-
+                    </div>
+                </div>
+            </div>
                     <!-- Blog Comments -->
                     <!-- Comments Form -->
                     <div class="well">
@@ -133,9 +140,7 @@
                 </div>
             </div>
         </div>
-    </div>
- </div>
-    </div>
+
  
 
     

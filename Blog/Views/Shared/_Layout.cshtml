@@ -12,13 +12,13 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script type="text/javascript">
-        var appInsights=window.appInsights||function(config){
-            function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;for(s.src=config.url||"//az416426.vo.msecnd.net/scripts/a/ai.0.js",u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=["Event","Exception","Metric","PageView","Trace","Ajax"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t
+        var appInsights = window.appInsights || function (config) {
+            function r(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } var t = { config: config }, u = document, e = window, o = "script", s = u.createElement(o), i, f; for (s.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", u.getElementsByTagName(o)[0].parentNode.appendChild(s), t.cookie = u.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace", "Ajax"]; i.length;) r("track" + i.pop()); return r("setAuthenticatedUserContext"), r("clearAuthenticatedUserContext"), config.disableExceptionTracking || (i = "onerror", r("_" + i), f = e[i], e[i] = function (config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t["_" + i](config, r, u, e, o), s }), t
         }({
-            instrumentationKey:"78d2d3e6-5ebb-439a-abe0-15b934bf75e4"
+            instrumentationKey: "78d2d3e6-5ebb-439a-abe0-15b934bf75e4"
         });
 
-        window.appInsights=appInsights;
+        window.appInsights = appInsights;
         appInsights.trackPageView();
     </script>
     <!-- Bootstrap Core CSS -->
@@ -38,104 +38,107 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-    <body>
-        <!-- Navigation -->
-        @*<nav class="navbar navbar-default navbar-custom navbar-fixed-top">*@
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header page-scroll">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        Menu <i class="fa fa-bars"></i>
-                    </button>
-                    <a class="navbar-brand" href="index.html"></a>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-left">
-                        <li>
-                            @Html.ActionLink("Home", "Index", "Home")
-                        </li>
-                        <li>
-                            @Html.ActionLink("About", "About", "Home")
-                        </li>
-                        <li>
-                            @Html.ActionLink("Posts", "Index", "BlogPosts")
-                        </li>
-                        <li>
-                            @Html.ActionLink("Contact", "Contact", "Home")
-                        </li>
-                        <li>
-                            @Html.Partial("_LoginPartial")
-                        </li>
-                        </ul>
-                        @*<li class="nav navbar-nav navbar-right">
-                            <div class="searchBox">
-                                @using (Html.BeginForm("Index", "BlogPosts"))
-                                {
-                                    <input type="text" name="searchStr" />
-                                    <input type="submit" class="search" value="Search" />
-                                }
-                            </div>
-                         </li>*@
-                      @RenderBody() 
+<body>
+    <!-- Navigation -->
+    @*<nav class="navbar navbar-default navbar-custom navbar-fixed-top">*@
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href="index.html"></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                   <a href="https://mburns-portfolio.azurewebsites.net/">Portfolio</a>                
+                </li>
+                <li>
+                    @Html.ActionLink("Home", "Index", "Home")
+                </li>
+                <li>
+                    @Html.ActionLink("About", "About", "Home")
+                </li>
+                <li>
+                    @Html.ActionLink("Posts", "Index", "BlogPosts")
+                </li>
+                <li>
+                    @Html.ActionLink("Contact", "Contact", "Home")
+                </li>
+                <li>
+                    @Html.Partial("_LoginPartial")
+                </li>
+            </ul>
+            @*<li class="nav navbar-nav navbar-right">
+                   <div class="searchBox">
+                       @using (Html.BeginForm("Index", "BlogPosts"))
+                       {
+                           <input type="text" name="searchStr" />
+                           <input type="submit" class="search" value="Search" />
+                       }
                    </div>
-                <!-- /.navbar-collapse -->
-            </div>
-            <!-- /.container -->
+                </li>*@
+        </div>
+        @RenderBody()
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
     @*<div class="container body-content">
-         <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">*@
-                        @*<ul class="list-inline text-center">
-                            <li>
-                                <a href="#">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>*@
-                        @*<p class="copyright text-muted">Copyright &copy; Mary Ann Burns 2016</p>
+        <footer>
+           <div class="container">
+               <div class="row">
+                   <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">*@
+    @*<ul class="list-inline text-center">
+            <li>
+                <a href="#">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                    </span>
+                </a>
+            </li>
+        </ul>*@
+    @*<p class="copyright text-muted">Copyright &copy; Mary Ann Burns 2016</p>
                     </div>
                 </div>
             </div>
         </footer>
         </div>*@
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-        <!-- jQuery -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <!-- jQuery -->
 
-        <script src="~/BlogTemplate/vendor/jquery/jquery.min.js"></script>
-        <!-- Bootstrap Core JavaScript -->
-        <script src="~/BlogTemplate/vendor/bootstrap/js/bootstrap.min.js"></script>
-     
-        <!-- Contact Form JavaScript -->
-        <script src="~/BlogTemplate/js/jqBootstrapValidation.js"></script>
-   
-        <script src="~/BlogTemplate/js/contact_me.js"></script>
-      
-        <!-- Theme JavaScript -->
-        <script src="~/BlogTemplate/js/clean-blog.min.js"></script>
-  
+    <script src="~/BlogTemplate/vendor/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/BlogTemplate/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="~/BlogTemplate/js/jqBootstrapValidation.js"></script>
+
+    <script src="~/BlogTemplate/js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="~/BlogTemplate/js/clean-blog.min.js"></script>
+
 </body>
 </html>

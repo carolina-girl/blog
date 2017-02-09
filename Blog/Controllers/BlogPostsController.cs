@@ -144,8 +144,15 @@ namespace Blog.Controllers
         [Authorize(Roles = "Admin, Moderator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Body,MediaURL,Published")] BlogPost blogPost)
+        public ActionResult Edit([Bind(Include = "Id,Title,Body,MediaURL,Published")] BlogPost blogPost, HttpPostedFileBase image)
         {
+            if (image != null && image.ContentLength > 0)
+            {
+                //check the file name to make sure its an image
+                var ext = Path.GetExtension(image.FileName).ToLower();
+                if (ext != ".png" && ext != ".jpg" && ext != ".jpeg" && ext != ".gif" && ext != ".bmp")
+                    ModelState.AddModelError("image", "Invalid Format.");
+            }
             if (ModelState.IsValid)
             {
                 var Slug = StringUtilities.URLFriendly(blogPost.Title);
@@ -159,7 +166,17 @@ namespace Blog.Controllers
                 //    ModelState.AddModelError("Title", "The title must be unique.");
                 //    return View(blogPost);
                 //}
-
+                if (image != null)
+                {
+                    //relative server path
+                    var filePath = "/fileUpload/";
+                    //path on physical drive on server
+                    var absPath = Server.MapPath("~" + filePath);
+                    // media url for relative path
+                    blogPost.MediaURL = filePath + image.FileName;
+                    //save image
+                    image.SaveAs(Path.Combine(absPath, image.FileName));
+                }
                 blogPost.Slug = Slug;
                 db.Entry(blogPost).State = EntityState.Modified;
                 blogPost.Created = DateTimeOffset.Now;

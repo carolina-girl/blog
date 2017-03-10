@@ -5,12 +5,14 @@
 }
 <style>
     body {
-        margin-left: 50px;
-        margin-right: 50px;
+        margin: 0px 200px 0px 200px;
+    }
+   .image-responsive {
+        max-height: 300px;
     }
 </style>
 
-<header class="intro-header" style="background-image: url('@Model.MediaURL')" alt="<h1>@Model.Title</h1>">
+@*<header class="intro-header" style="background-image: url('@Model.MediaURL')" alt="<h1>@Model.Title</h1>">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -19,7 +21,14 @@
             </div>
         </div>
     </div>
-</header>
+</header>*@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div><img style="border:none; margin-top:0; margin-left:0; margin-right:0; max-height:1024px" class="img-responsive" src="@Model.MediaURL"/></div>
+        </div>
+    </div>
+</div>
 <div class="banner-bg" id="top">
     <div class="welcome-text">
         <h2>@Model.Title</h2>

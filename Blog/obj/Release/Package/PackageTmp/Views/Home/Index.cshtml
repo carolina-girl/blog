@@ -8,7 +8,12 @@ body {
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
+    color: white !important;
+    background-color: white;
     }
+.site-heading {
+    color: white;
+}
 </style>
 
     <!-- Set your background image for this header on the line below. -->
@@ -17,7 +22,7 @@ body {
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="site-heading">
-                    <h1>Blog</h1>
+                    <div style="color:white;"><h1>@Html.ActionLink("Blog", "Index", "BlogPosts")</h1></div>
                     <span class="subheading"></span>
                     <h2><em>Mary Ann Burns</em></h2>
                 </div>

@@ -17,7 +17,7 @@ namespace Blog.Controllers
     public class CommentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        private object slug;
+
 
         // GET: Comments
         public ActionResult Index()
@@ -93,8 +93,8 @@ namespace Blog.Controllers
                 db.Comments.Attach(comment);
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
-                var Slug = db.BlogPosts.Find(comment.PostId).Slug;
-                return RedirectToAction("Details", "BlogPosts", new { slug = Slug });
+                var slug = db.BlogPosts.Find(comment.PostId).Slug;
+                return RedirectToAction("Details", "BlogPosts", new { Slug = slug });
             }
             ViewBag.PostId = new SelectList(db.BlogPosts, "Id", "Title", comment.PostId);
             return View(comment);
@@ -125,8 +125,8 @@ namespace Blog.Controllers
             db.Comments.Remove(comment);
             db.SaveChanges();
 
-            var Slug = db.BlogPosts.Find(comment.PostId).Slug;
-            return RedirectToAction("Details", "BlogPosts", new { slug = Slug });
+            var slug = db.BlogPosts.Find(comment.PostId).Slug;
+            return RedirectToAction("Details", "BlogPosts", new { Slug = slug });
         }
 
         protected override void Dispose(bool disposing)

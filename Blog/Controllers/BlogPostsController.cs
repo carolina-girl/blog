@@ -19,7 +19,7 @@ namespace Blog.Controllers
     public class BlogPostsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        private string submitButton;
+        //private string submitButton;
 
 
         // GET: BlogPosts

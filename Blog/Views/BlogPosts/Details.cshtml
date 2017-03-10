@@ -7,6 +7,9 @@
     body {
         margin: 0px 200px 0px 200px;
     }
+   .image-responsive {
+        max-height: 300px;
+    }
 </style>
 
 @*<header class="intro-header" style="background-image: url('@Model.MediaURL')" alt="<h1>@Model.Title</h1>">
@@ -22,7 +25,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <img style="border:none; margin-top:0; margin-left:0; margin-right:0; max-height:800px" class="img-responsive" src="@Model.MediaURL"/>
+            <div><img style="border:none; margin-top:0; margin-left:0; margin-right:0; max-height:1024px" class="img-responsive" src="@Model.MediaURL"/></div>
         </div>
     </div>
 </div>

@@ -15,17 +15,29 @@ using Microsoft.AspNet.Identity;
 
 namespace Blog.Controllers
 {
-    [RequireHttps]
+    //[RequireHttps]
     public class BlogPostsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        //private string submitButton;
 
+        // GET: BlogPosts/Index
+        public ActionResult Index(int? page)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.FName = db.Users.Find(User.Identity.GetUserId()).FirstName;
+            }
+            int pageSize = 3;       // the number of posts you want to display per page
+            int pageNumber = (page ?? 1);
 
-        // GET: BlogPosts
+            var listPosts = db.BlogPosts.AsQueryable();
+            return View(listPosts.OrderByDescending(p => p.Created).ToPagedList(pageNumber, pageSize));
+        }
+
+        [HttpPost]
         public ActionResult Index(string searchStr, int? page)
         {
-            var listPosts = db.BlogPosts.ToList().AsQueryable();
+            var listPosts = db.BlogPosts.AsQueryable();
             if (!string.IsNullOrWhiteSpace(searchStr))
             {
                 listPosts = listPosts.Where(p => p.Title.Contains(searchStr) ||
@@ -36,16 +48,12 @@ namespace Blog.Controllers
                                                                      c.Author.DisplayName.Contains(searchStr) ||
                                                                      c.Author.Email.Contains(searchStr)));
             }
-
             int pageSize = 3; //shows 3 blog posts at a time on this page
             int pageNumber = (page ?? 1);
-
-            var model = listPosts.OrderByDescending(post => post.Created).ToPagedList(pageNumber, pageSize);
-            return View(model);
+            return View(listPosts.OrderByDescending(p => p.Created).ToPagedList(pageNumber, pageSize));
         }
 
-
-   
+  
         // GET: BlogPosts/Details/5
         public ActionResult Details(string Slug)
         {

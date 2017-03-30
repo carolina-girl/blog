@@ -46,43 +46,42 @@
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <li class="nav navbar-nav navbar-right">
                 <div class="searchBox">
-                    @using (Html.BeginForm("Index", "BlogPosts"))
+                    @using (Html.BeginForm("Index", "BlogPosts", FormMethod.Post, htmlAttributes: new { @class = "form-inline topbar__search", role = "form" }))
                     {
                         <input type="text" name="searchStr" />
                                     <input type="submit" class="search" value="Search" />
                     }
                 </div>
             </li>
-
-            <div class="post-preview">
-                  @foreach (var post in Model)
-                  {
+                <div class="post-preview">
+                    @foreach (var post in Model)
+                    {
                         <h2><a href="@Url.Action("Details", new { slug = post.Slug })">@post.Title</a></h2>
                         <h4><a href="@Url.Action("Details", new { slug = post.Slug })">@Truncate(post.Body, 85)</a></h4>
-                            <h5>@Html.ActionLink("Read more here...", "Details", new { slug = @post.Slug })</h5>
+                        <h5>@Html.ActionLink("Read more here...", "Details", new { slug = @post.Slug })</h5>
                             <div class="post-meta">Posted by <a href="#">Mary Ann Burns on @post.Created.ToLocalTime().ToString("MMMM dd, yyyy")</a></div>
-                            if (ViewContext.HttpContext.User.IsInRole("Admin"))
-                            {
-                                @Html.ActionLink("Edit", "Edit", new { id = post.Id }) 
-                                @Html.ActionLink("Delete", "Delete", new { id = post.Id });
-                            }
-                  }
-                <div class="form-group">
-                    @if (ViewContext.HttpContext.User.IsInRole("Admin"))
-                      {
-                        <div class="col-md-offset-2 col-md-10">
-                            @using (Html.BeginForm("Create", "BlogPosts", FormMethod.Post, new { enctype = "Multipart/form-data" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <div>
-                                <input type="submit" value="Create" class="btn btn-default" />
-                                    </div>
-                            }
-                        </div>
+                        if (ViewContext.HttpContext.User.IsInRole("Admin"))
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { id = post.Id })
+                            @Html.ActionLink("Delete", "Delete", new { id = post.Id });
+                        }
                     }
+                    <div class="form-group">
+                        @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+                        {
+                            <div class="col-md-offset-2 col-md-10">
+                                @using (Html.BeginForm("Create", "BlogPosts", FormMethod.Post, new { enctype = "Multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div>
+                                        <input type="submit" value="Create" class="btn btn-default" />
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
                 </div>
-            </div>
-        </div>
+</div>
     </div>
     </div>
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

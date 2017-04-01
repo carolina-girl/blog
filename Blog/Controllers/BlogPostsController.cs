@@ -15,28 +15,17 @@ using Microsoft.AspNet.Identity;
 
 namespace Blog.Controllers
 {
-    //[RequireHttps]
+    [RequireHttps]
     public class BlogPostsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: BlogPosts/Index
-        public ActionResult Index(int? page)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                ViewBag.FName = db.Users.Find(User.Identity.GetUserId()).FirstName;
-            }
-            int pageSize = 3;       // the number of posts you want to display per page
-            int pageNumber = (page ?? 1);
-
-            var listPosts = db.BlogPosts.AsQueryable();
-            return View(listPosts.OrderByDescending(p => p.Created).ToPagedList(pageNumber, pageSize));
-        }
-
-        [HttpPost]
+        // GET: BlogPosts
         public ActionResult Index(string searchStr, int? page)
         {
+            int pageSize = 3; //shows 3 blog posts at a time on this page
+            int pageNumber = (page ?? 1);
+            ViewBag.Searchstr = searchStr;
             var listPosts = db.BlogPosts.AsQueryable();
             if (!string.IsNullOrWhiteSpace(searchStr))
             {
@@ -48,12 +37,15 @@ namespace Blog.Controllers
                                                                      c.Author.DisplayName.Contains(searchStr) ||
                                                                      c.Author.Email.Contains(searchStr)));
             }
-            int pageSize = 3; //shows 3 blog posts at a time on this page
-            int pageNumber = (page ?? 1);
-            return View(listPosts.OrderByDescending(p => p.Created).ToPagedList(pageNumber, pageSize));
+            else
+            {
+                ViewBag.SearchStr = "Search Posts";
+            }            
+            var model = listPosts.OrderByDescending(post => post.Created).ToPagedList(pageNumber, pageSize);
+            return View(model);
         }
 
-  
+
         // GET: BlogPosts/Details/5
         public ActionResult Details(string Slug)
         {
